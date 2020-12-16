@@ -21,7 +21,7 @@ The database is subject to the following business rules:
 
 * Suppliers to The Happy Phone Company have a unique name and contact phone number.
 
-* Phones stocked by The Happy Phone Company are described by a product number, retail price and stock quantity.
+* Phones stocked by The Happy Phone Company are described by a product code, retail price and stock quantity.
 
 * Details of phones need to be kept, including make and model information.
 
