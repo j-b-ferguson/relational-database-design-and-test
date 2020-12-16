@@ -34,3 +34,19 @@ The database is subject to the following business rules:
 <h2><p align="center">Modelling the Business Rules</p></h2>
 
 <p align="center"><img src="https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/ER%20Model/ER%20Model%20-%20The%20Happy%20Phone%20Company.png" width=80% height=80%></p>
+
+<h2><p align="center">ER Model to Relational Database Schema Mapping</p></h2>
+
+Supplier(<u>supplierName</u>, contactPhone)
+
+Supply(<u>supplierName*, productCode*</u>, supplyPrice, supplyQuantity, supplyDate)
+
+Phones(<u>productCode</u>, make, model, stockQuantity, retailPrice)
+
+Customer(<u>custID</u>, custname)
+
+Purchase(<u>purchaseNo</u>, purchaseDate, custID*, productCode*, empID*)
+
+Contract(<u>contractNo, purchaseNo*</u>, contractTerm, contractPrice)
+
+Employee(<u>empID</u>, empName, position)
