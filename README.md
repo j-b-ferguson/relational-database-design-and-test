@@ -37,20 +37,16 @@ The database is subject to the following business rules:
 
 <h2><p align="center">ER Model to Relational Database Schema Mapping</p></h2>
 
-<p style="text-decoration: underline;">Supplier(<u>supplierName</u>, contactPhone)</p>
+Supplier(<ins>supplierName</ins>, contactPhone)
 
-Supply(<u>supplierName*, productCode*</u>, supplyPrice, supplyQuantity, supplyDate)
+Supply(<ins>supplierName*, productCode*</ins>, supplyPrice, supplyQuantity, supplyDate)
 
-Phones(<u>productCode</u>, make, model, stockQuantity, retailPrice)
+Phones(<ins>productCode</ins>, make, model, stockQuantity, retailPrice)
 
-Customer(<u>custID</u>, custname)
+Customer(<ins>custID</ins>, custname)
 
-Purchase(<u>purchaseNo</u>, purchaseDate, custID*, productCode*, empID*)
+Purchase(<ins>purchaseNo</ins>, purchaseDate, custID*, productCode*, empID*)
 
-Contract(<u>contractNo, purchaseNo*</u>, contractTerm, contractPrice)
+Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
-Employee(<u>empID</u>, empName, position)
-</p>
-<p>This is some <u>mispeled</u> text.</p>
-
-<span style="text-decoration: underline">underlined text</span>
+Employee(<ins>empID</ins>, empName, position)
