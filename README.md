@@ -19,7 +19,7 @@ The database is subject to the following business rules:
 
 * Each customer of The Happy Phone Company is identified by a customer ID and has a name.
 
-* Suppliers to The Happy Phone Company have a unique name and phone number.
+* Suppliers to The Happy Phone Company have a unique name and contact phone number.
 
 * Phones stocked by The Happy Phone Company are described by a product number, retail price and stock quantity.
 
