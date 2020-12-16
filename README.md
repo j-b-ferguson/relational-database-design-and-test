@@ -31,6 +31,22 @@ The database is subject to the following business rules:
 
 * Details of a purchase by a customer shall include the date of purchase and a contract number (if applicable). A customer can purchase several phones in a single day and the details of each purchase must be kept.
 
+<h2><p align="center">Functional Dependencies of the Business Rules</p></h2>
+
+employee ID &#8594; employee name, position
+
+customer ID &#8594; customer name
+
+supplier name &#8594; phone number
+
+product code &#8594; make, model, retail price, stock quantity
+
+purchase number, contract number &#8594; contract term, contract price
+
+supplier name, product code &#8594; supply price, supply quantity, supply date
+
+purchase number &#8594; customer ID, product code, employee ID, purchase date
+
 <h2><p align="center">Modelling the Business Rules</p></h2>
 
 <p align="center"><img src="https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/ER%20Model/ER%20Model%20-%20The%20Happy%20Phone%20Company.png" width=80% height=80%></p>
