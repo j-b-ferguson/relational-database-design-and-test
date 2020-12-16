@@ -5,11 +5,15 @@
 <a href="https://www.linkedin.com/in/jf2749/"><p align="center">Justin Ferguson LinkedIn</p></a>
 <a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p align="center">Contact</p></a>
 
-<h2><p align="center">Business Requirements</p></h2>
+<h2><p align="center">Background</p></h2>
 
-The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts. 
+<p align="justify">
+The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts.
+</p>
 
-The database must meet the following requirements:
+<h2><p align="center">Business Rules</p></h2>
+
+The database is subject to the following business rules:
 
 * Information about The Happy Phone Company employees includes an employee ID, name and position.
 
@@ -26,3 +30,5 @@ The database must meet the following requirements:
 * A phone must have at least one supplier and each supplier can supply many phones. When a supplier supplies a phone, data includes a supply price, the quantity supplied and the date of the supply. If a supplier provides several supplies of a phone, only data for the most recent supply is kept.
 
 * Customers purchase phones. Details of a purchase include date of the purchase, and a contract number if applicable. A customer can purchase several phones in a day and the details of each purchase must be kept.
+
+<h2><p align="center">Business Requirements</p></h2>
