@@ -59,7 +59,7 @@ Supply(<ins>supplierName*, productCode*</ins>, supplyPrice, supplyQuantity, supp
 
 Phones(<ins>productCode</ins>, make, model, stockQuantity, retailPrice)
 
-Customer(<ins>custID</ins>, custname)
+Customer(<ins>custID</ins>, custName)
 
 Purchase(<ins>purchaseNo</ins>, purchaseDate, custID*, productCode*, empID*)
 
