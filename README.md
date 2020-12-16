@@ -31,4 +31,4 @@ The database is subject to the following business rules:
 
 * Customers purchase phones. Details of a purchase include date of the purchase, and a contract number if applicable. A customer can purchase several phones in a day and the details of each purchase must be kept.
 
-<h2><p align="center">Business Requirements</p></h2>
+<h2><p align="center">Modelling the Business Rules</p></h2>
