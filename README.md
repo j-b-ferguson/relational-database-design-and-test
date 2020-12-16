@@ -1,5 +1,10 @@
 <h1><p align="center">Designing and Testing a Database for The Happy Phone Company</p></h1>
 
+<p align="center"><b>Author</b></p>
+<a href="https://github.com/j-b-ferguson"><p align="center">Justin Ferguson GitHub</p></a>
+<a href="https://www.linkedin.com/in/jf2749/"><p align="center">Justin Ferguson LinkedIn</p></a>
+<a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p align="center">Contact</p></a>
+
 <h2><p align="center">Business Requirements</p></h2>
 
 The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts. 
