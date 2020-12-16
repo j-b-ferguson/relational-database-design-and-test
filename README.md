@@ -25,10 +25,10 @@ The database is subject to the following business rules:
 
 * Details of phones need to be kept, including make and model information.
 
-* Contracts supplied by The Happy Phone Company are described by a contract number, contract term and contract price.
+* Contracts supplied by The Happy Phone Company are described by a contract number, contract term in months and contract price.
 
 * A phone must have at least one supplier and each supplier can supply many phones. When a supplier supplies a phone, data includes a supply price, the quantity supplied and the date of the supply. If a supplier provides several supplies of a phone, only data for the most recent supply is kept.
 
-* Customers purchase phones. Details of a purchase include date of the purchase, and a contract number if applicable. A customer can purchase several phones in a day and the details of each purchase must be kept.
+* Details of a purchase by a customer shall include the date of purchase and a contract number (if applicable). A customer can purchase several phones in a single day and the details of each purchase must be kept.
 
 <h2><p align="center">Modelling the Business Rules</p></h2>
