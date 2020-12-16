@@ -37,7 +37,7 @@ The database is subject to the following business rules:
 
 <h2><p align="center">ER Model to Relational Database Schema Mapping</p></h2>
 
-Supplier(<u>supplierName</u>, contactPhone)
+<p>Supplier(<u>supplierName</u>, contactPhone)</p>
 
 Supply(<u>supplierName*, productCode*</u>, supplyPrice, supplyQuantity, supplyDate)
 
@@ -50,3 +50,4 @@ Purchase(<u>purchaseNo</u>, purchaseDate, custID*, productCode*, empID*)
 Contract(<u>contractNo, purchaseNo*</u>, contractTerm, contractPrice)
 
 Employee(<u>empID</u>, empName, position)
+</p>
