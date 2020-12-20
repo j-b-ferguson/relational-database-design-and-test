@@ -69,7 +69,9 @@ The standard for this database is either 3NF or BCNF. The keys of the relations 
 
 <h2><p align="center">Modelling the Business Rules</p></h2>
 
-<p align="center"><img src="https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/ER%20Model/ER%20Model%20-%20The%20Happy%20Phone%20Company.png" width=80% height=80%></p>
+Functional dependencies and normalisation were used to find the non-redundant relationships between the attributes and determine the appropriate keys. The next step is to find the zero-many, one-many and many-many relationships that will later determine the constraints in the relational model. An entity-relationship diagram in UML format has been created below
+
+<p align="center"><figure><img src="https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/ER%20Model/ER%20Model%20-%20The%20Happy%20Phone%20Company.png" width=80% height=80%><figcaption>Powered by <a href="https://www.lucidchart.com/">Lucidchart</a></figcaption></figure></p>
 
 <h2><p align="center">ER Model to Relational Database Schema Mapping</p></h2>
 
