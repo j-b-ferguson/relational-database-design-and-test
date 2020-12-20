@@ -68,7 +68,7 @@ Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 Employee(<ins>empID</ins>, empName, position)
 
 ```sql
-SQL> -- Which employee had the most overall sales?
+-- Which employee had the most overall sales?
 SQL> SELECT
   2      e.empid,
   3      empname,
@@ -96,7 +96,7 @@ EMPID EMPNAME          SALES COUNT
 ```
 
 ```sql
-SQL> -- Which customer purchased the most products in November 2020?
+-- Which customer purchased the most products in November 2020?
 SQL> SELECT
   2      c.custid,
   3      c.custname,
@@ -128,7 +128,7 @@ CUSTID CUSTNAME                   PURCHASES
 ```
 
 ```sql
-SQL> -- How many sales were made on 07/DEC/20?
+-- How many sales were made on 07/DEC/20?
 SQL> SELECT
   2      SUM(COUNT(purchaseno)) AS "TOTAL SALES"
   3  FROM
@@ -144,7 +144,7 @@ TOTAL SALES
 ```
 
 ```sql
-SQL> -- How many phone contracts were sold as purchases on 07/DEC/20?
+-- How many phone contracts were sold as purchases on 07/DEC/20?
 SQL> SELECT
   2      SUM(COUNT(contractno)) AS "CONTRACTS SOLD"
   3  FROM
@@ -162,7 +162,7 @@ CONTRACTS SOLD
 ```
 
 ```sql
-SQL> -- What is the most popular selling make and model of phone?
+-- What is the most popular selling make and model of phone?
 SQL> SELECT
   2      make,
   3      model,
@@ -191,7 +191,7 @@ Apple             irj-11736694U         25
 ```
 
 ```sql
-SQL> -- What is the cost difference between retailPrice and average contractPrice for the Apple model irj-11736694U?
+-- What is the cost difference between retailPrice and average contractPrice for the Apple model irj-11736694U?
 SQL> SELECT DISTINCT
   2      make,
   3      model,
@@ -223,7 +223,7 @@ Apple             irj-11736694U           36        1131                  2079  
 ```
 
 ```sql
-SQL> -- What is the cost difference between supplyPrice and retailPrice for the Apple model irj-11736694U?
+-- What is the cost difference between supplyPrice and retailPrice for the Apple model irj-11736694U?
 SQL> SELECT
   2      make,
   3      model,
@@ -242,7 +242,7 @@ Apple             irj-11736694U        1131         314             817
 ```
 
 ```sql
-SQL> -- Which supplier last supplied an Apple model phone?
+-- Which supplier last supplied an Apple model phone?
 SQL> SELECT
   2      suppliername,
   3      make,
@@ -274,7 +274,7 @@ Larson Inc                     Apple  13-DEC-20
 ```
 
 ```sql
-SQL> -- How many products were received on 01/DEC/20?
+-- How many products were received on 01/DEC/20?
 SQL> SELECT
   2      supplydate,
   3      SUM(supplyquantity) AS "PRODUCTS RECEIVED"
@@ -287,5 +287,5 @@ SQL> SELECT
 
 SUPPLYDATE PRODUCTS RECEIVED
 ---------- -----------------
-15-SEP-20                21
+15-SEP-20                 21
 ```
