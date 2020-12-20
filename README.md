@@ -57,13 +57,13 @@ The process of normalisation in database design removes data redundancy by measu
 
 The following points describe the levels of normal forms, where higher normal forms remove data redundancy more deeply.
 
-First Normal Form (1NF): Attributes of a relation are atomic values and do not contain sets.
+* First Normal Form (1NF): Attributes of a relation are atomic values and do not contain sets.
 
-Second Normal Form (2NF): Non-key attributes of a relation must be fully functionally dependent on a key.
+* Second Normal Form (2NF): Non-key attributes of a relation must be fully functionally dependent on a key.
 
-Third Normal Form (3NF): A functional dependency FD X &#8594; Y of a relation must have X as a candidate key or Y as part of a (possibly different) candidate key
+* Third Normal Form (3NF): A functional dependency FD X &#8594; Y of a relation must have X as a candidate key or Y as part of a (possibly different) candidate key
 
-Boyce-Codd Normal Form (BCNF): A functional dependency FD X &#8594; Y where X is a key of the relation.
+* Boyce-Codd Normal Form (BCNF): A functional dependency FD X &#8594; Y where X is a key of the relation.
 
 The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
 
