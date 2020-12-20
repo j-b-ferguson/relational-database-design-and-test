@@ -66,14 +66,3 @@ Purchase(<ins>purchaseNo</ins>, purchaseDate, custID*, productCode*, empID*)
 Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
 Employee(<ins>empID</ins>, empName, position)
-
-```sql
--- run_on_start
-CREATE TABLE Persons (
-  PersonID int,
-  LastName varchar(255),
-  FirstName varchar(255),
-  Address varchar(255),
-  City varchar(255)
-);
-```
