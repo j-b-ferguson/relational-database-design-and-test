@@ -66,3 +66,226 @@ Purchase(<ins>purchaseNo</ins>, purchaseDate, custID*, productCode*, empID*)
 Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
 Employee(<ins>empID</ins>, empName, position)
+
+```sql
+SQL> -- Which employee had the most overall sales?
+SQL> SELECT
+  2      e.empid,
+  3      empname,
+  4      COUNT(e.empid) AS "SALES COUNT"
+  5  FROM
+  6           employee e
+  7      JOIN purchase p ON e.empid = p.empid
+  8  GROUP BY
+  9      e.empid,
+ 10      empname
+ 11  HAVING
+ 12      COUNT(e.empid) >= ALL (
+ 13          SELECT
+ 14              COUNT(e.empid)
+ 15          FROM
+ 16                   employee e
+ 17              JOIN purchase p ON e.empid = p.empid
+ 18          GROUP BY
+ 19              e.empid
+ 20      );
+
+EMPID EMPNAME          SALES COUNT
+----- ---------------- -----------
+6     Kleon Dewey              107                                              
+```
+
+```sql
+SQL> -- Which customer purchased the most products in November 2020?
+SQL> SELECT
+  2      c.custid,
+  3      c.custname,
+  4      COUNT(c.custid) AS "PURCHASES"
+  5  FROM
+  6           customer c
+  7      JOIN purchase p ON c.custid = p.custid
+  8  WHERE
+  9      p.purchasedate BETWEEN '01/NOV/20' AND '30/NOV/20'
+ 10  GROUP BY
+ 11      c.custid,
+ 12      c.custname
+ 13  HAVING
+ 14      COUNT(c.custid) >= ALL (
+ 15          SELECT
+ 16              COUNT(c.custid)
+ 17          FROM
+ 18                   customer c
+ 19              JOIN purchase p ON c.custid = p.custid
+ 20          WHERE
+ 21              p.purchasedate BETWEEN '01/NOV/20' AND '30/NOV/20'
+ 22          GROUP BY
+ 23              c.custid
+ 24      );
+
+CUSTID CUSTNAME                   PURCHASES
+------ ------------------------- ----------
+696    Fanya Attard                       2
+```
+
+```sql
+SQL> -- How many sales were made on 07/DEC/20?
+SQL> SELECT
+  2      SUM(COUNT(purchaseno)) AS "TOTAL SALES"
+  3  FROM
+  4      purchase
+  5  WHERE
+  6      purchasedate = '07/DEC/20'
+  7  GROUP BY
+  8      purchaseno;
+
+TOTAL SALES
+-----------
+          3
+```
+
+```sql
+SQL> -- How many phone contracts were sold as purchases on 07/DEC/20?
+SQL> SELECT
+  2      SUM(COUNT(contractno)) AS "CONTRACTS SOLD"
+  3  FROM
+  4      contract  c,
+  5      purchase  p
+  6  WHERE
+  7          c.purchaseno = p.purchaseno
+  8      AND p.purchasedate = '07/DEC/20'
+  9  GROUP BY
+ 10      contractno;
+
+CONTRACTS SOLD
+--------------
+             1
+```
+
+```sql
+SQL> -- What is the most popular selling make and model of phone?
+SQL> SELECT
+  2      make,
+  3      model,
+  4      COUNT(model) AS "SOLD"
+  5  FROM
+  6           phones ph
+  7      JOIN purchase pu ON pu.productcode = ph.productcode
+  8  GROUP BY
+  9      make,
+ 10      model
+ 11  HAVING
+ 12      COUNT(model) >= ALL (
+ 13          SELECT
+ 14              COUNT(model)
+ 15          FROM
+ 16                   phones ph
+ 17              JOIN purchase pu ON pu.productcode = ph.productcode
+ 18          GROUP BY
+ 19              make,
+ 20              model
+ 21      );
+
+MAKE              MODEL               SOLD
+----------------- ------------- ----------
+Apple             irj-11736694U         25
+```
+
+```sql
+SQL> -- What is the cost difference between retailPrice and average contractPrice for the Apple model irj-11736694U?
+SQL> SELECT DISTINCT
+  2      make,
+  3      model,
+  4      contractterm,
+  5      retailprice,
+  6      round(AVG(contractprice))                      AS "AVERAGE CONTRACTPRICE",
+  7      round(AVG(contractprice)) - retailprice        AS "COST DIFFERENCE"
+  8  FROM
+  9      phones    ph,
+ 10      purchase  pu,
+ 11      contract  co
+ 12  WHERE
+ 13          pu.productcode = ph.productcode
+ 14      AND pu.purchaseno = co.purchaseno
+ 15      AND model = 'irj-11736694U'
+ 16  GROUP BY
+ 17      make,
+ 18      model,
+ 19      contractterm,
+ 20      retailprice
+ 21  ORDER BY
+ 22      contractterm;
+
+MAKE              MODEL         CONTRACTTERM RETAILPRICE AVERAGE CONTRACTPRICE COST DIFFERENCE
+----------------- ------------- ------------ ----------- --------------------- ---------------
+Apple             irj-11736694U           12        1131                  1196              65
+Apple             irj-11736694U           24        1131                  1752             621
+Apple             irj-11736694U           36        1131                  2079             948
+```
+
+```sql
+SQL> -- What is the cost difference between supplyPrice and retailPrice for the Apple model irj-11736694U?
+SQL> SELECT
+  2      make,
+  3      model,
+  4      retailprice,
+  5      supplyprice,
+  6      ( retailprice - supplyprice ) AS "COST DIFFERENCE"
+  7  FROM
+  8           phones p
+  9      JOIN supply s ON p.productcode = s.productcode
+ 10  WHERE
+ 11      model = 'irj-11736694U';
+
+MAKE              MODEL         RETAILPRICE SUPPLYPRICE COST DIFFERENCE
+----------------- ------------- ----------- ----------- ---------------
+Apple             irj-11736694U        1131         314             817
+```
+
+```sql
+SQL> -- Which supplier last supplied an Apple model phone?
+SQL> SELECT
+  2      suppliername,
+  3      make,
+  4      MAX(supplydate) AS "SUPPLYDATE"
+  5  FROM
+  6      supply  s,
+  7      phones  p
+  8  WHERE
+  9          s.productcode = p.productcode
+ 10      AND make = 'Apple'
+ 11  GROUP BY
+ 12      suppliername,
+ 13      make
+ 14  HAVING
+ 15      MAX(supplydate) >= ALL (
+ 16          SELECT
+ 17              MAX(supplydate)
+ 18          FROM
+ 19              supply  s,
+ 20              phones  p
+ 21          WHERE
+ 22                  s.productcode = p.productcode
+ 23              AND make = 'Apple'
+ 24      );
+
+SUPPLIERNAME                   MAKE  SUPPLYDATE
+------------------------------ ----- ----------
+Larson Inc                     Apple  13-DEC-20
+```
+
+```sql
+SQL> -- How many products were received on 01/DEC/20?
+SQL> SELECT
+  2      supplydate,
+  3      SUM(supplyquantity) AS "PRODUCTS RECEIVED"
+  4  FROM
+  5      supply
+  6  WHERE
+  7      supplydate = '15/SEP/20'
+  8  GROUP BY
+  9      supplydate;
+
+SUPPLYDATE PRODUCTS RECEIVED
+---------- -----------------
+15-SEP-20                21
+```
