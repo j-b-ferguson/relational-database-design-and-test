@@ -67,6 +67,8 @@ Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
 Employee(<ins>empID</ins>, empName, position)
 
+<h2><p align="center">Testing the Relational Database with SQL Queries</p></h2>
+
 ```sql
 -- Which employee had the most overall sales?
 SQL> SELECT
