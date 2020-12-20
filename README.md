@@ -65,7 +65,7 @@ The following points describe the levels of normal forms, where higher normal fo
 
 * Boyce-Codd Normal Form (BCNF): A functional dependency FD X &#8594; Y where X is a key of the relation.
 
-The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
+The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies above are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
 
 <h2><p align="center">Modelling the Business Rules</p></h2>
 
