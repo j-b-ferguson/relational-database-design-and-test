@@ -13,7 +13,7 @@ The Happy Phone Company is a fictitious retailer of various makes and models of 
 
 <h2><p align="center">Business Rules</p></h2>
 
-The database is subject to the following business rules:
+The database must satisfy the following business rules:
 
 * Information about The Happy Phone Company employees includes an employee ID, name and position.
 
@@ -33,6 +33,10 @@ The database is subject to the following business rules:
 
 <h2><p align="center">Functional Dependencies of the Business Rules</p></h2>
 
+The first step in creating a relational database is to obtain the functional dependencies from the business rules. A functional dependency is a logical relationship between two sets of attributes X={X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub>} and Y={Y<sub>1</sub>, Y<sub>2</sub>, ..., Y<sub>n</sub>}. A functional dependency must satisfy the criteria X &#8594; Y, where the arrow notation is read in plain english as <i>determine</i>. In other words, all attributes together in X determine any attribute in Y, and any attribute in Y must be related to those in X.
+
+The following are the set of minimal basis functional dependencies drawn from the business rules:
+
 employee ID &#8594; employee name, position
 
 customer ID &#8594; customer name
@@ -46,6 +50,22 @@ purchase number, contract number &#8594; contract term, contract price
 supplier name, product code &#8594; supply price, supply quantity, supply date
 
 purchase number &#8594; customer ID, product code, employee ID, purchase date
+
+<h2><p align="center">Normalisation</p></h2>
+
+The process of normalisation in database design removes data redundancy by measuring the goodness of a relational schema with respect to the <i>normal forms</i>. An important concept in normalisation is the <i>key</i> of a relation. As a functional dependency X &#8594; Y, a key is the set of attributes in X that completely determine the remaining attributes in Y of a relation.
+
+The following points describe the levels of normal forms, where higher normal forms remove data redundancy more deeply.
+
+First Normal Form (1NF): Attributes of a relation are atomic values and do not contain sets of values.
+
+Second Normal Form (2NF): Non-key attributes of a relation must be fully functionally dependent on a key.
+
+Third Normal Form (3NF): A functional dependency FD X &#8594; Y of a relation must have X as a candidate key or Y as part of a (possibly different) candidate key
+
+Boyce-Codd Normal Form (BCNF): A functional dependency FD X &#8594; Y where X is a key of the relation.
+
+The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
 
 <h2><p align="center">Modelling the Business Rules</p></h2>
 
