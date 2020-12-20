@@ -33,7 +33,7 @@ The database must satisfy the following business rules:
 
 <h2><p align="center">Functional Dependencies of the Business Rules</p></h2>
 
-The first step in creating a relational database is to obtain the functional dependencies from the business rules. A functional dependency is a logical relationship between two sets of attributes X={X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub>} and Y={Y<sub>1</sub>, Y<sub>2</sub>, ..., Y<sub>n</sub>}. A functional dependency must satisfy the criteria X &#8594; Y, where the arrow notation is read in plain english as <i>determine</i>. In other words, all attributes together in X determine any attribute in Y, and any attribute in Y must be related to those in X.
+The first step in creating a relational database is to obtain the functional dependencies from the business rules. A functional dependency is a logical relationship between two sets of attributes X={X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub>} and Y={Y<sub>1</sub>, Y<sub>2</sub>, ..., Y<sub>n</sub>}, and must satisfy the criteria X &#8594; Y, where the arrow notation is read in plain english as <i>determine</i>. In other words, all attributes together in X determine any attribute in Y, and any attribute in Y must be related to those in X.
 
 The following are the set of minimal basis functional dependencies drawn from the business rules:
 
@@ -53,11 +53,11 @@ purchase number &#8594; customer ID, product code, employee ID, purchase date
 
 <h2><p align="center">Normalisation</p></h2>
 
-The process of normalisation in database design removes data redundancy by measuring the goodness of a relational schema with respect to the <i>normal forms</i>. An important concept in normalisation is the <i>key</i> of a relation. As a functional dependency X &#8594; Y, a key is the set of attributes in X that completely determine the remaining attributes in Y of a relation.
+The process of normalisation in database design removes data redundancy by measuring the goodness of a relational schema with respect to the <i>normal forms</i>. An important concept in normalisation is the <i>key</i> of a relation. For a functional dependency X &#8594; Y, a key is the set of attributes in X that completely determine the remaining attributes in Y of a relation.
 
 The following points describe the levels of normal forms, where higher normal forms remove data redundancy more deeply.
 
-First Normal Form (1NF): Attributes of a relation are atomic values and do not contain sets of values.
+First Normal Form (1NF): Attributes of a relation are atomic values and do not contain sets.
 
 Second Normal Form (2NF): Non-key attributes of a relation must be fully functionally dependent on a key.
 
