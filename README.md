@@ -92,6 +92,12 @@ Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
 Employee(<ins>empID</ins>, empName, position)
 
+<h2><p align="center">Creating the Relational Database in Oracle and Inserting a Sample Data Set</p></h2>
+
+Database tables are created from the relational schema in Oracle SQL Developer with SQL `CREATE TABLE` and `INSERT` statements. Sample data has been created and inserted into these tables to allow for realistic testing later. The method used to create the sample data is briefly described [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/README.md).
+
+Below is an extract of the relational database SQL script, with a few `INSERT` statements included to show method. The complete script can be viewed [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/The%20Happy%20Phone%20Company%20Relational%20Database.sql). 
+
 <h2><p align="center">Testing the Relational Database in Oracle with SQL Queries</p></h2>
 
 ```sql
