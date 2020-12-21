@@ -98,6 +98,150 @@ Database tables are created from the relational schema in Oracle SQL Developer w
 
 Below is an extract of the relational database SQL script, with a few `INSERT` statements included to show method. The complete script can be viewed [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/The%20Happy%20Phone%20Company%20Relational%20Database.sql). 
 
+```sql
+SQL> CREATE TABLE Supplier(
+  2      supplierName varchar(30),
+  3      contactPhone char(12),
+  4      PRIMARY KEY(supplierName)
+  5      );
+
+Table created.
+
+SQL> insert into Supplier (supplierName, contactPhone) values ('Hansen and Sons', '428-147-4213');
+
+1 row created.
+
+SQL> insert into Supplier (supplierName, contactPhone) values ('Dicki-Thompson', '871-171-0605');
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Phones(
+  2      productCode char(11),
+  3      make varchar(17),
+  4      model varchar(13),
+  5      stockQuantity int,
+  6      retailPrice int,
+  7      PRIMARY KEY(productCode)
+  8      );
+
+Table created.
+
+SQL> insert into Phones (productCode, make, model, stockQuantity, retailPrice) values ('675-971-898', 'Apple', 'pIJ-91679356G', '1', 741);
+
+1 row created.
+
+SQL> insert into Phones (productCode, make, model, stockQuantity, retailPrice) values ('105-878-560', 'Apple', 'CRL-52853444Q', '3', 937);
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Customer(
+  2      custID varchar(4),
+  3      custName varchar(25),
+  4      PRIMARY KEY(custID)
+  5      );
+
+Table created.
+
+SQL> insert into Customer (custID, custName) values (1, 'Eydie Quixley');
+
+1 row created.
+
+SQL> insert into Customer (custID, custName) values (2, 'Isa Arunowicz');
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Employee(
+  2      empID varchar(2),
+  3      empName varchar(16),
+  4      position varchar(17),
+  5      PRIMARY KEY(empID)
+  6      );
+
+Table created.
+
+SQL> insert into Employee (empID, empName, position) values (1, 'Judith Mumbey', 'Director');
+
+1 row created.
+
+SQL> insert into Employee (empID, empName, position) values (2, 'Moishe Forsey', 'Manager');
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Purchase(
+  2      purchaseNo char(12),
+  3      purchaseDate date,
+  4      custID varchar(4),
+  5      productCode char(11),
+  6      empID varchar(2),
+  7      PRIMARY KEY(purchaseNo),
+  8      FOREIGN KEY(custID) REFERENCES Customer(custID),
+  9      FOREIGN KEY(productCode) REFERENCES Phones(productCode),
+ 10      FOREIGN KEY(empID) REFERENCES Employee(empID)
+ 11      );
+
+Table created.
+
+SQL> insert into Purchase (purchaseNo, purchaseDate, custID, productCode, empID) values ('P634-340-525', '20-Sep-2019', 425, '334-405-233', 4);
+
+1 row created.
+
+SQL> insert into Purchase (purchaseNo, purchaseDate, custID, productCode, empID) values ('P672-549-119', '01-Mar-2020', 258, '852-219-856', 5);
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Supply(
+  2      supplierName varchar(30),
+  3      productCode char(11),
+  4      supplyPrice int,
+  5      supplyQuantity int,
+  6      supplyDate date,
+  7      PRIMARY KEY(supplierName, productCode),
+  8      FOREIGN KEY(supplierName) REFERENCES Supplier(supplierName),
+  9      FOREIGN KEY(productCode) REFERENCES Phones(productCode)
+ 10      );
+
+Table created.
+
+SQL> insert into Supply (supplierName, productCode, supplyPrice, supplyQuantity, supplyDate) values ('Anderson and Sons', '675-971-898', 365, '0', '02-Sep-20');
+
+1 row created.
+
+SQL> insert into Supply (supplierName, productCode, supplyPrice, supplyQuantity, supplyDate) values ('Douglas LLC', '105-878-560', 394, '8', '15-Sep-20');
+
+1 row created.
+```
+
+```sql
+SQL> CREATE TABLE Contract(
+  2      contractNo char(12),
+  3      purchaseNo char(12),
+  4      contractTerm int,
+  5      contractPrice int,
+  6      PRIMARY KEY(contractNo, purchaseNo),
+  7      FOREIGN KEY(purchaseNo) REFERENCES Purchase(purchaseNo)
+  8      );
+
+Table created.
+
+SQL> insert into Contract (contractNo, purchaseNo, contractTerm, contractPrice) values ('C908-706-335', 'P497-820-348', 12, 1020);
+
+1 row created.
+
+SQL> insert into Contract (contractNo, purchaseNo, contractTerm, contractPrice) values ('C039-465-806', 'P903-920-423', 36, 2196);
+
+1 row created.
+```
+
 <h2><p align="center">Testing the Relational Database in Oracle with SQL Queries</p></h2>
 
 ```sql
