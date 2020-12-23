@@ -244,6 +244,20 @@ SQL> insert into Contract (contractNo, purchaseNo, contractTerm, contractPrice) 
 
 <h2><p align="center">Testing the Relational Database in Oracle with SQL Queries</p></h2>
 
+A database must be able to handle SQL queries created by an employee based on questions derived from the business rules. Examples include:
+
+* Which employee had the most overall sales?
+* Which customer purchased the most products in a given period?
+* How many sales were made on a given date?
+* How many phone contracts were sold as purchases on a given date?
+* What is the most popular selling make and model of phone?
+* What is the cost difference between retailPrice and average contractPrice for a given model of phone?
+* What is the cost difference between supplyPrice and retailPrice for a given model of phone?
+* Which supplier last supplied a particular model of phone?
+* How many products were received on a given date?
+
+The following SQL queries demonstrate the good design of the database to handle such questions.
+
 ```sql
 -- Which employee had the most overall sales?
 SQL> SELECT
