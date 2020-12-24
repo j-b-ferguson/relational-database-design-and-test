@@ -1,4 +1,4 @@
-<h1><p align="center">Designing and Testing a Database for The Happy Phone Company</p></h1>
+<h1><p align="center">Designing and Testing a Relational Database for The Happy Phone Company</p></h1>
 
 <p align="center"><b>Author</b></p>
 <a href="https://github.com/j-b-ferguson"><p align="center">Justin Ferguson GitHub</p></a>
