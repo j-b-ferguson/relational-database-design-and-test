@@ -164,5 +164,3 @@ WHERE
     supplydate = '15/SEP/20'
 GROUP BY
     supplydate;
-
-
