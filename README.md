@@ -1,9 +1,12 @@
-<h1><p align="center">Designing and Testing a Relational Database for The Happy Phone Company</p></h1>
+<h1><p align="center">Designing and Testing a Relational Database</p></h1>
 
 <p align="center"><b>Author</b></p>
 <a href="https://github.com/j-b-ferguson"><p align="center">Justin Ferguson GitHub</p></a>
 <a href="https://www.linkedin.com/in/jf2749/"><p align="center">Justin Ferguson LinkedIn</p></a>
 <a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p align="center">Contact</p></a>
+<br>
+<p align="center"><b>Other Versions</b></p>
+<a href="https://www.justinferguson.me/pages/relational-database-design-and-test.html"><p align="center">HTML Report</p></a>
 
 <h2><p align="center">Background</p></h2>
 
