@@ -1,0 +1,706 @@
+---
+title: "Designing and Testing a Relational Database"
+author: <a href="https://www.justinferguson.me" style="color:white;">Justin Ferguson</a>
+date: "2020-12-17"
+output:
+  rmdformats::material:
+    lightbox: TRUE
+    gallery: TRUE
+---
+
+<style>
+.border-p {
+  display: inline-block;
+  position: relative;
+  padding: 10px;
+  border: 1px solid silver;
+}
+
+pre code {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+
+code.sourceCode {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+code.sourceCode.sql {
+  margin-left: 36px;
+  padding-left: 0px;
+
+}
+
+code span {
+  margin-left: 0px;
+  padding-left: 0px;
+}
+
+
+</style>
+
+# Background
+
+The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts.
+
+# Business Rules
+
+__*The database must satisfy the following business rules:*__<br><br>
+
+* Information about The Happy Phone Company employees includes an employee ID, name and position.
+
+* Each customer of The Happy Phone Company is identified by a customer ID and has a name.
+
+* Suppliers to The Happy Phone Company have a unique name and contact phone number.
+
+* Phones stocked by The Happy Phone Company are described by a product code, retail price and stock quantity.
+
+* Details of phones need to be kept, including make and model information.
+
+* Contracts supplied by The Happy Phone Company are described by a contract number, contract term in months and contract price.
+
+* A phone must have at least one supplier and each supplier can supply many phones. When a supplier supplies a phone, data includes a supply price, the quantity supplied and the date of the supply. If a supplier provides several supplies of a phone, only data for the most recent supply is kept.
+
+* Details of a purchase by a customer shall include the date of purchase and a contract number (if applicable). A customer can purchase several phones in a single day and the details of each purchase must be kept.
+
+# Functional Dependencies of the Business Rules
+
+The first step in creating a relational database is to obtain the functional dependencies from the business rules. A functional dependency is a logical relationship between two sets of attributes X={X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub>} and Y={Y<sub>1</sub>, Y<sub>2</sub>, ..., Y<sub>n</sub>}, and must satisfy the criteria X &#8594; Y, where the arrow notation is read in plain english as <i>determine</i>. In other words, all attributes together in X determine any attribute in Y, and any attribute in Y must be related to those in X.
+<br><br>
+The following are the set of minimal basis functional dependencies drawn from the business rules:
+<br><br>
+<p class="border-p">
+employee ID &#8594; employee name, position
+<br><br>
+customer ID &#8594; customer name
+<br><br>
+supplier name &#8594; phone number
+<br><br>
+product code &#8594; make, model, retail price, stock quantity
+<br><br>
+purchase number, contract number &#8594; contract term, contract price
+<br><br>
+supplier name, product code &#8594; supply price, supply quantity, supply date
+<br><br>
+purchase number &#8594; customer ID, product code, employee ID, purchase date
+</p>
+
+# Normalisation
+
+The process of normalisation in database design removes data redundancy by measuring the goodness of a relational schema with respect to the <i>normal forms</i>. An important concept in normalisation is the <i>key</i> of a relation. For a functional dependency X &#8594; Y, a key is the set of attributes in X that completely determine the remaining attributes in Y of a relation.
+<br><br>
+The following points describe the levels of normal forms, where higher normal forms remove data redundancy more deeply.
+<br><br>
+<p class="border-p">
+__*First Normal Form (1NF):*__ Attributes of a relation are atomic values and do not contain sets.
+<br><br>
+__*Second Normal Form (2NF):*__ Non-key attributes of a relation must be fully functionally dependent on a key.
+<br><br>
+__*Third Normal Form (3NF):*__ A functional dependency FD X &#8594; Y of a relation must have X as a candidate key or Y as part of a (possibly different) candidate key
+<br><br>
+__*Boyce-Codd Normal Form (BCNF):*__ A functional dependency FD X &#8594; Y where X is a key of the relation.
+</p>
+<br>
+The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies above are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
+
+# Modelling the Business Rules
+
+Functional dependencies and normalisation were used to find the non-redundant relationships between the attributes and determine the appropriate keys. The next step is to find the cardinalities of the relations. These are the zero-many (0..\*), one-many (1..\*)and one-one (1..1) relationships that will later determine the constraints of the relational model. An entity-relationship diagram in UML format has been created below for this purpose. Note the Contract class is a weak-entity set and the solid diamonds represent associations (1..1 relationships) between classes.
+<br><br>
+<center>
+```{r, out.width="640px", out.height="480px", fig.cap="Figure 1: An ER diagram of the business model in UML format.", warning=FALSE, echo=FALSE}
+knitr::include_graphics('C:/Users/fergi/Documents/business-database-design-and-test/ER Model/ER Model - The Happy Phone Company.png')
+```
+</center>
+
+# ER Model to Relational Database Schema Mapping
+
+The ER diagram is a high-level design of the database. To obtain a low-level design, the diagram is mapped into a relational database schema, where underlined attributes represent primary keys, and attributes with asterisks represent foreign keys.
+<br><br>
+<p class="border-p">
+Supplier(<ins>supplierName</ins>, contactPhone)
+<br><br>
+Supply(<ins>supplierName\*, productCode\*</ins>, supplyPrice, supplyQuantity, supplyDate)
+<br><br>
+Phones(<ins>productCode</ins>, make, model, stockQuantity, retailPrice)
+<br><br>
+Customer(<ins>custID</ins>, custName)
+<br><br>
+Purchase(<ins>purchaseNo</ins>, purchaseDate, custID\*, productCode\*, empID\*)
+<br><br>
+Contract(<ins>contractNo, purchaseNo\*</ins>, contractTerm, contractPrice)
+<br><br>
+Employee(<ins>empID</ins>, empName, position)
+</p>
+
+# Creating the Relational Database in Oracle with Dummy Data
+
+Database tables have been created from the relational schema in Oracle SQL Developer with SQL `CREATE TABLE` and `INSERT` statements. Sample data has been created and inserted into these tables to allow for realistic testing later. The method used to create the sample data is briefly described [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/README.md).
+
+Below is an extract of the relational database SQL script, with a few `INSERT` statements included to show method. The complete script can be viewed [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/The%20Happy%20Phone%20Company%20Relational%20Database.sql).
+<br>
+
+***
+
+```{sql, eval=FALSE}
+CREATE TABLE Supplier
+  (
+     suppliername VARCHAR(30),
+     contactphone CHAR(12),
+     PRIMARY KEY(suppliername)
+  );
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Supplier
+            (suppliername,
+             contactphone)
+VALUES      ('Hansen and Sons',
+             '428-147-4213' ); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Supplier
+            (suppliername,
+             contactphone)
+VALUES      ('Dicki-Thompson',
+             '871-171-0605'); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Phones
+  (
+     productcode   CHAR(11),
+     make          VARCHAR(17),
+     model         VARCHAR(13),
+     stockquantity INT,
+     retailprice   INT,
+     PRIMARY KEY(productcode)
+  ); 
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval = FALSE}
+INSERT INTO Phones
+            (productcode,
+             make,
+             model,
+             stockquantity,
+             retailprice)
+VALUES      ('675-971-898',
+             'Apple',
+             'pIJ-91679356G',
+             '1',
+             741);
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Phones
+            (productcode,
+             make,
+             model,
+             stockquantity,
+             retailprice)
+VALUES      ('105-878-560',
+             'Apple',
+             'CRL-52853444Q',
+             '3',
+             937);
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Customer
+  (
+     custid   VARCHAR(4),
+     custname VARCHAR(25),
+     PRIMARY KEY(custid)
+  ); 
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Customer
+            (custid,
+             custname)
+VALUES      (1,
+             'Eydie Quixley');
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Customer
+            (custid,
+             custname)
+VALUES      (2,
+             'Isa Arunowicz'); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Employee
+  (
+     empid    VARCHAR(2),
+     empname  VARCHAR(16),
+     position VARCHAR(17),
+     PRIMARY KEY(empid)
+  ); 
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Employee
+            (empid,
+             empname,
+             position)
+VALUES      (1,
+             'Judith Mumbey',
+             'Director'); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Employee
+            (empid,
+             empname,
+             position)
+VALUES      (2,
+             'Moishe Forsey',
+             'Manager');
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Purchase
+  (
+     purchaseno   CHAR(12),
+     purchasedate DATE,
+     custid       VARCHAR(4),
+     productcode  CHAR(11),
+     empid        VARCHAR(2),
+     PRIMARY KEY(purchaseno),
+     FOREIGN KEY(custid) REFERENCES customer(custid),
+     FOREIGN KEY(productcode) REFERENCES phones(productcode),
+     FOREIGN KEY(empid) REFERENCES employee(empid)
+  ); 
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Purchase
+            (purchaseno,
+             purchasedate,
+             custid,
+             productcode,
+             empid)
+VALUES      ('P634-340-525',
+             '20-Sep-2019',
+             425,
+             '334-405-233',
+             4); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Purchase
+            (purchaseno,
+             purchasedate,
+             custid,
+             productcode,
+             empid)
+VALUES      ('P672-549-119',
+             '01-Mar-2020',
+             258,
+             '852-219-856',
+             5); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Supply
+  (
+     suppliername   VARCHAR(30),
+     productcode    CHAR(11),
+     supplyprice    INT,
+     supplyquantity INT,
+     supplydate     DATE,
+     PRIMARY KEY(suppliername, productcode),
+     FOREIGN KEY(suppliername) REFERENCES supplier(suppliername),
+     FOREIGN KEY(productcode) REFERENCES phones(productcode)
+  );
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Supply
+            (suppliername,
+             productcode,
+             supplyprice,
+             supplyquantity,
+             supplydate)
+VALUES      ('Anderson and Sons',
+             '675-971-898',
+             365,
+             '0',
+             '02-Sep-20'); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Supply
+            (suppliername,
+             productcode,
+             supplyprice,
+             supplyquantity,
+             supplydate)
+VALUES      ('Douglas LLC',
+             '105-878-560',
+             394,
+             '8',
+             '15-Sep-20');
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+CREATE TABLE Contract
+  (
+     contractno    CHAR(12),
+     purchaseno    CHAR(12),
+     contractterm  INT,
+     contractprice INT,
+     PRIMARY KEY(contractno, purchaseno),
+     FOREIGN KEY(purchaseno) REFERENCES purchase(purchaseno)
+  );
+```
+
+```
+##   Table created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO Contract
+            (contractno,
+             purchaseno,
+             contractterm,
+             contractprice)
+VALUES      ('C908-706-335',
+             'P497-820-348',
+             12,
+             1020); 
+```
+
+```
+##   1 row created.
+```
+
+```{sql, eval=FALSE}
+INSERT INTO contract
+            (contractno,
+             purchaseno,
+             contractterm,
+             contractprice)
+VALUES      ('C039-465-806',
+             'P903-920-423',
+             36,
+             2196);
+```
+
+```
+##   1 row created.
+```
+
+# Testing the Relational Database in Oracle with SQL Queries
+
+A database must be able to handle SQL queries created by an employee based on questions derived from the business rules. Examples include:<br><br>
+
+* Which employee had the most overall sales?
+
+* Which customer purchased the most products in a given period?
+
+* How many sales were made on a given date?
+
+* How many phone contracts were sold as purchases on a given date?
+
+* What is the most popular selling make and model of phone?
+
+* What is the cost difference between retailPrice and average contractPrice for a given model of phone?
+
+* What is the cost difference between supplyPrice and retailPrice for a given model of phone?
+
+* Which supplier last supplied a particular model of phone?
+
+* How many products were received on a given date?
+
+<br>
+The following SQL queries demonstrate the good design of the database to handle such questions.
+<br>
+
+***
+
+---__*Which employee had the most overall sales?*__
+
+```{sql, eval=FALSE}
+SELECT e.empid,
+       empname,
+       Count(e.empid) AS "SALES COUNT"
+FROM   Employee e
+       join Purchase p
+         ON e.empid = p.empid
+GROUP  BY e.empid,
+          empname
+HAVING Count(e.empid) >= ALL (SELECT Count(e.empid)
+                              FROM   Employee e
+                                     join Purchase p
+                                       ON e.empid = p.empid
+                              GROUP  BY e.empid);
+```
+
+```
+##   EMPID EMPNAME          SALES COUNT
+----- ---------------- -----------
+6     Kleon Dewey              107
+```
+
+<br><br>
+---__*Which customer purchased the most products in November 2020?*__
+
+```{sql, eval=FALSE}
+SELECT c.custid,
+       c.custname,
+       Count(c.custid) AS "PURCHASES"
+FROM   customer c
+       join purchase p
+         ON c.custid = p.custid
+WHERE  p.purchasedate BETWEEN '01/NOV/20' AND '30/NOV/20'
+GROUP  BY c.custid,
+          c.custname
+HAVING Count(c.custid) >= ALL (SELECT Count(c.custid)
+                               FROM   customer c
+                                      join purchase p
+                                        ON c.custid = p.custid
+                               WHERE  p.purchasedate BETWEEN
+                                      '01/NOV/20' AND '30/NOV/20'
+                               GROUP  BY c.custid); 
+```
+
+```
+##   CUSTID CUSTNAME                   PURCHASES
+------ ------------------------- ----------
+696    Fanya Attard                       2
+```
+
+<br><br>
+--- __*How many sales were made on 07/DEC/20?*__
+
+```{sql, eval=FALSE}
+SELECT SUM(Count(purchaseno)) AS "TOTAL SALES"
+FROM   purchase
+WHERE  purchasedate = '07/DEC/20'
+GROUP  BY purchaseno;
+```
+
+```
+##   TOTAL SALES
+-----------
+          3
+```
+
+<br><br>
+--- __*How many phone contracts were sold as purchases on 07/DEC/20?*__
+
+```{sql, eval=FALSE}
+SELECT SUM(Count(contractno)) AS "CONTRACTS SOLD"
+FROM   contract c,
+       purchase p
+WHERE  c.purchaseno = p.purchaseno
+       AND p.purchasedate = '07/DEC/20'
+GROUP  BY contractno; 
+```
+
+```
+##   CONTRACTS SOLD
+--------------
+             1
+```
+
+<br><br>
+--- __*What is the most popular selling make and model of phone?*__
+
+```{sql, eval=FALSE}
+SELECT make,
+       model,
+       Count(model) AS "SOLD"
+FROM   phones ph
+       join purchase pu
+         ON pu.productcode = ph.productcode
+GROUP  BY make,
+          model
+HAVING Count(model) >= ALL (SELECT Count(model)
+                            FROM   phones ph
+                                   join purchase pu
+                                     ON pu.productcode = ph.productcode
+                            GROUP  BY make,
+                                      model);
+```
+
+```
+##   MAKE              MODEL               SOLD
+----------------- ------------- ----------
+Apple             irj-11736694U         25
+```
+
+<br><br>
+--- __*What is the cost difference between retailPrice and average contractPrice for the Apple model irj-11736694U?*__
+
+```{sql, eval=FALSE}
+SELECT DISTINCT make,
+                model,
+                contractterm,
+                retailprice,
+                Round(Avg(contractprice))               AS
+                "AVERAGE CONTRACTPRICE",
+                Round(Avg(contractprice)) - retailprice AS "COST DIFFERENCE"
+FROM   phones ph,
+       purchase pu,
+       contract co
+WHERE  pu.productcode = ph.productcode
+       AND pu.purchaseno = co.purchaseno
+       AND model = 'irj-11736694U'
+GROUP  BY make,
+          model,
+          contractterm,
+          retailprice
+ORDER  BY contractterm;
+```
+
+```
+##   MAKE              MODEL         CONTRACTTERM RETAILPRICE AVERAGE CONTRACTPRICE COST DIFFERENCE
+----------------- ------------- ------------ ----------- --------------------- ---------------
+Apple             irj-11736694U           12        1131                  1196              65
+Apple             irj-11736694U           24        1131                  1752             621
+Apple             irj-11736694U           36        1131                  2079             948
+```
+
+<br><br>
+--- __*What is the cost difference between supplyPrice and retailPrice for the Apple model irj-11736694U?*__
+
+```{sql, eval=FALSE}
+SELECT make,
+       model,
+       retailprice,
+       supplyprice,
+       ( retailprice - supplyprice ) AS "COST DIFFERENCE"
+FROM   phones p
+       join supply s
+         ON p.productcode = s.productcode
+WHERE  model = 'irj-11736694U';
+```
+
+```
+##   MAKE              MODEL         RETAILPRICE SUPPLYPRICE COST DIFFERENCE
+----------------- ------------- ----------- ----------- ---------------
+Apple             irj-11736694U        1131         314             817
+```
+
+<br><br>
+--- __*Which supplier last supplied an Apple model phone?*__
+
+```{sql, eval=FALSE}
+SELECT suppliername,
+       make,
+       Max(supplydate) AS "SUPPLYDATE"
+FROM   supply s,
+       phones p
+WHERE  s.productcode = p.productcode
+       AND make = 'Apple'
+GROUP  BY suppliername,
+          make
+HAVING Max(supplydate) >= ALL (SELECT Max(supplydate)
+                               FROM   supply s,
+                                      phones p
+                               WHERE  s.productcode = p.productcode
+                                      AND make = 'Apple');
+```
+
+```
+##   SUPPLIERNAME                   MAKE  SUPPLYDATE
+------------------------------ ----- ----------
+Larson Inc                     Apple  13-DEC-20
+```
+
+<br><br>
+--- __*How many products were received on 01/DEC/20?*__
+
+```{sql, eval=FALSE}
+SELECT supplydate,
+       SUM(supplyquantity) AS "PRODUCTS RECEIVED"
+FROM   supply
+WHERE  supplydate = '15/SEP/20'
+GROUP  BY supplydate;
+```
+
+```
+##   SUPPLYDATE PRODUCTS RECEIVED
+---------- -----------------
+15-SEP-20                 21
+```
