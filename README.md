@@ -1,14 +1,14 @@
-<h1><p align="center">Designing and Testing a Relational Database</p></h1>
+# Designing and Testing a Relational Database
 
 <p align="center"><b>Author</b></p>
-<a href="https://github.com/j-b-ferguson"><p align="center">Justin Ferguson GitHub</p></a>
-<a href="https://www.linkedin.com/in/j-b-ferguson/"><p align="center">Justin Ferguson LinkedIn</p></a>
-<a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p align="center">Contact</p></a>
+<a href="https://github.com/j-b-ferguson"><p>Justin Ferguson GitHub</p></a>
+<a href="https://www.linkedin.com/in/j-b-ferguson/"><p>Justin Ferguson LinkedIn</p></a>
+<a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p>Contact</p></a>
 <br>
-<p align="center"><b>Other Versions</b></p>
-<a href="https://www.justinferguson.me/pages/relational-database-design-and-test.html"><p align="center">HTML Report</p></a>
+<p><b>Other Versions</b></p>
+<a href="https://www.justinferguson.me/pages/relational-database-design-and-test.html"><p>HTML Report</p></a>
 
-<h2><p align="center">Background</p></h2>
+# Background
 
 <p align="justify">
 The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts.
@@ -34,7 +34,7 @@ The database must satisfy the following business rules:
 
 * Details of a purchase by a customer shall include the date of purchase and a contract number (if applicable). A customer can purchase several phones in a single day and the details of each purchase must be kept.
 
-<h2><p align="center">Functional Dependencies of the Business Rules</p></h2>
+# Functional Dependencies of the Business Rules
 
 The first step in creating a relational database is to obtain the functional dependencies from the business rules. A functional dependency is a logical relationship between two sets of attributes X={X<sub>1</sub>, X<sub>2</sub>, ..., X<sub>n</sub>} and Y={Y<sub>1</sub>, Y<sub>2</sub>, ..., Y<sub>n</sub>}, and must satisfy the criteria X &#8594; Y, where the arrow notation is read in plain english as <i>determine</i>. In other words, all attributes together in X determine any attribute in Y, and any attribute in Y must be related to those in X.
 
@@ -54,7 +54,7 @@ supplier name, product code &#8594; supply price, supply quantity, supply date
 
 purchase number &#8594; customer ID, product code, employee ID, purchase date
 
-<h2><p align="center">Normalisation</p></h2>
+# Normalisation
 
 The process of normalisation in database design removes data redundancy by measuring the goodness of a relational schema with respect to the <i>normal forms</i>. An important concept in normalisation is the <i>key</i> of a relation. For a functional dependency X &#8594; Y, a key is the set of attributes in X that completely determine the remaining attributes in Y of a relation.
 
@@ -70,7 +70,7 @@ The following points describe the levels of normal forms, where higher normal fo
 
 The standard for this database is either 3NF or BCNF. The keys of the relations inferred from the minimal set of functional dependencies above are {employee ID}, {customer ID}, {supplier name}, {product code}, {purchase number, contract number}, {supplier name, product code}, {purchase number}. With respect to the definitions above, the relations are all in BCNF.
 
-<h2><p align="center">Modelling the Business Rules</p></h2>
+# Modelling the Business Rules
 
 Functional dependencies and normalisation were used to find the non-redundant relationships between the attributes and determine the appropriate keys. The next step is to find the cardinalities of the relations. These are the zero-many (0..&#65290;), one-many (1..&#65290;)and one-one (1..1) relationships that will later determine the constraints of the relational model. An entity-relationship diagram in UML format has been created below for this purpose. Note the Contract class is a weak-entity set and the solid diamonds represent associations (1..1 relationships) between classes.
 
@@ -95,7 +95,7 @@ Contract(<ins>contractNo, purchaseNo*</ins>, contractTerm, contractPrice)
 
 Employee(<ins>empID</ins>, empName, position)
 
-<h2><p align="center">Creating the Relational Database in Oracle and Inserting a Sample Data Set</p></h2>
+# Creating the Relational Database in Oracle and Inserting a Sample Data Set
 
 Database tables have been created from the relational schema in Oracle SQL Developer with SQL `CREATE TABLE` and `INSERT` statements. Sample data has been created and inserted into these tables to allow for realistic testing later. The method used to create the sample data is briefly described [here](https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/SQL%20code/README.md).
 
@@ -245,7 +245,7 @@ SQL> insert into Contract (contractNo, purchaseNo, contractTerm, contractPrice) 
 1 row created.
 ```
 
-<h2><p align="center">Testing the Relational Database in Oracle with SQL Queries</p></h2>
+# Testing the Relational Database in Oracle with SQL Queries
 
 A database must be able to handle SQL queries created by an employee based on questions derived from the business rules. Examples include:
 
