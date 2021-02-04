@@ -1,6 +1,6 @@
 # Designing and Testing a Relational Database
 
-<p align="center"><b>Author</b></p>
+<p><b>Author</b></p>
 <a href="https://github.com/j-b-ferguson"><p>Justin Ferguson GitHub</p></a>
 <a href="https://www.linkedin.com/in/j-b-ferguson/"><p>Justin Ferguson LinkedIn</p></a>
 <a href="mailto:justin.benjamin.ferguson@gmail.com?subject=GitHub%20Enquiry"><p>Contact</p></a>
