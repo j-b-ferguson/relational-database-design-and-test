@@ -77,7 +77,7 @@ Functional dependencies and normalisation were used to find the non-redundant re
 <p align="center"><img src="https://github.com/j-b-ferguson/business-database-design-and-test/blob/main/ER%20Model/ER%20Model%20-%20The%20Happy%20Phone%20Company.png" width=75% height=75%></p>
 <p align="center">Figure 1: An ER diagram of the business model in UML format. Created at <a href="https://www.lucidchart.com/">Lucidchart</a>.</p>
 
-<h2><p align="center">ER Model to Relational Database Schema Mapping</p></h2>
+# ER Model to Relational Database Schema Mapping
 
 The ER diagram above is a high-level design of the database. To obtain a low-level design of the database, the diagram is mapped into a relational database schema, where underlined attributes represent primary keys, and attributes with asterisks represent foreign keys.
 
