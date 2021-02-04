@@ -14,7 +14,7 @@
 The Happy Phone Company is a fictitious retailer of various makes and models of mobile phones. The business requires a new database to help manage data concerning employees, customers, suppliers, phones and contracts.
 </p>
 
-<h2><p align="center">Business Rules</p></h2>
+# Business Rules
 
 The database must satisfy the following business rules:
 
